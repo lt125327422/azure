@@ -8,8 +8,8 @@ spring:
     show-sql: true
 
 #jackson实体转json时 为NULL不参加序列化 (全局配置)
-#  jackson:
-#    default-property-inclusion: non_null
+  jackson:
+    default-property-inclusion: non_null
 
 
 #    url的前缀

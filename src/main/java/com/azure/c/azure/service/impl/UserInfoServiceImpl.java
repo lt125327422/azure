@@ -1,16 +1,23 @@
 package com.azure.c.azure.service.impl;
 
 
+import com.azure.c.azure.converter.UserInfoFormUserInfoConvert;
+import com.azure.c.azure.enums.ResultEnum;
+import com.azure.c.azure.exception.AzureException;
+import com.azure.c.azure.form.UserInfoForm;
 import com.azure.c.azure.po.UserInfo;
 import com.azure.c.azure.repository.UserInfoRepository;
 import com.azure.c.azure.service.UserInfoService;
+import com.azure.c.azure.utils.KeyUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
+@Slf4j
 public class UserInfoServiceImpl implements UserInfoService {
 
     @Autowired
@@ -22,13 +29,32 @@ public class UserInfoServiceImpl implements UserInfoService {
         return byUserName;
     }
 
+
     @Override
-    public void createAccount() {
+    public void registerAccount(UserInfoForm userInfoForm) {
+        UserInfo userInfo = new UserInfo();
+        BeanUtils.copyProperties(userInfoForm, userInfo);
+
+
+//        String userId = UUID.randomUUID().toString();
+        String genUniqueKey = KeyUtil.genUniqueKey();
+        userInfo.setId(genUniqueKey);
+
+        userInfoRepository.save(userInfo);
 
     }
 
+    @Override
+    public void updateAccount(UserInfoForm userInfoForm) {
+        UserInfo userInfoPO = userInfoRepository.getOne(userInfoForm.getId());
+        if (userInfoPO != null) {
+            throw new AzureException(ResultEnum.ACCOUNT_HAS_EXIST);
+        }
 
-    // String token = UUID.randomUUID().toString();
+
+        UserInfo convert = UserInfoFormUserInfoConvert.convert(userInfoForm);
+        userInfoRepository.save(convert);
+    }
 
 
 }
