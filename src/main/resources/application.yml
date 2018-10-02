@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://192.168.31.123/azure?characterEncoding=utf-8&useSSL=false
+  jpa:
+    show-sql: true
+
+#jackson实体转json时 为NULL不参加序列化 (全局配置)
+#  jackson:
+#    default-property-inclusion: non_null
+
+
+#    url的前缀
+server:
+  port: 8083
+  servlet:
+    context-path: /azurec
+
+
+#  已经在xml中配置了
+#logging:
+#  pattern:
+#    console: "%d - %msg%n"
+##  path: /var/log/tomcat/
+#  file: /var/log/tomcat/sell.log
+#  level:
+#    com.imooc.LoggerTest: debug
