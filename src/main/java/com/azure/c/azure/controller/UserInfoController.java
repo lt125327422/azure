@@ -25,7 +25,7 @@ public class UserInfoController {
     //  http://127.0.0.1:8083/azurec/userInfo/findUserByName?userName=cocoa
 
     /**
-     *
+     * 根据用户的名字来获取该用户信息
      * @param userName
      * @return
      */
@@ -38,9 +38,12 @@ public class UserInfoController {
 
     }
 
-    @RequestMapping("/index")
+    @GetMapping("/index")
     public String index(){
         return "hello world spring boot ";
     }
+
+
+
 
 }
